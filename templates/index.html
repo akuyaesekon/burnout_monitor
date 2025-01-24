@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Burnout Monitor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Burnout Monitor Logo" class="logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li>
+                    <li><a href="{{ url_for('additional_visualizations') }}">Additional Visualizations</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="content-container">
+            <section>
+                <div class="image-container">
+                    <img src="{{ url_for('static', filename='images/stt.png') }}" alt="Project Image" class="project-image">
+                </div>
+            </section>
+            <section>
+                <h2>Overview</h2>
+                <p>Welcome to the Burnout Monitor. This project aims to analyze and visualize employee burnout data to help organizations understand and mitigate burnout among their employees.</p>
+                <p>Our website provides various features including:</p>
+                <ul>
+                    <li>Global burnout statistics</li>
+                    <li>Visualizations of burnout distribution based on different factors</li>
+                    <li>Identification of influential factors in burnout prediction</li>
+                    <li>Personalized recommendations for reducing burnout</li>
+                    <li>Additional visualizations for deeper insights</li>
+                </ul>
+                <h2>About the Project</h2>
+                <p>The Burnout Monitor project leverages data analysis and machine learning techniques to provide insights into employee burnout. By understanding the factors that contribute to burnout, organizations can take proactive measures to improve employee well-being and productivity.</p>
+                <p>Our visualizations and recommendations are designed to be user-friendly and actionable, helping organizations make data-driven decisions to support their workforce.</p>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Burnout Monitor. All rights reserved.</p>
+    </footer>
+</body>
+</html>

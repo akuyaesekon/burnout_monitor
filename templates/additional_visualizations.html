@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Visualizations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Burnout Monitor Logo" class="logo">
+            </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li>
+                <li><a href="{{ url_for('additional_visualizations') }}">Additional Visualizations</a></li>
+            </ul>
+        </nav>
+        </div>
+    </header>
+    <main>
+        <div class="visualization-container">
+            <h3>Burnout by Work Mode</h3>
+            <div id="burnout_by_work_mode">{{ burnout_by_work_mode|safe }}</div>
+        </div>
+        <div class="visualization-container">
+            <h3>Burnout Trends by Seniority</h3>
+            <div id="burnout_trends_by_seniority">{{ burnout_trends_by_seniority|safe }}</div>
+        </div>
+        <div class="visualization-container">
+            <h3>Heatmap of Correlations</h3>
+            <div id="heatmap">{{ heatmap|safe }}</div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Burnout Monitor. All rights reserved.</p>
+    </footer>
+</body>
+</html>

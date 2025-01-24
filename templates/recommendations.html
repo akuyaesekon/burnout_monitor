@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Burnout Monitor Logo" class="logo">
+            </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li>
+                <li><a href="{{ url_for('additional_visualizations') }}">Additional Visualizations</a></li>
+            </ul>
+        </nav>
+        </div>
+    </header>
+    <main>
+        <section class="influential-factors">
+            <h2>Influential Factors in Burnout Prediction</h2>
+            <ul>
+                {% for feature, importance in feature_importances.items() %}
+                    <li><span>{{ feature }}</span> <span>{{ importance }}</span></li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            <h2>Personalized Recommendations</h2>
+            <ul>
+                {% for recommendation in recommendations %}
+                    <li>{{ recommendation }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section>
+            <h2>Visualizations of Burnout Risk Factors</h2>
+            <div class="visualization-container">
+                <h3>Burnout Risk Factors</h3>
+                <div id="burnout_risk_factors">{{ burnout_risk_factors|safe }}</div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Burnout Monitor. All rights reserved.</p>
+    </footer>
+</body>
+</html>

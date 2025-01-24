@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Burnout Monitor Logo" class="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li>
+                <li><a href="{{ url_for('additional_visualizations') }}">Additional Visualizations</a></li>
+            </ul>
+        </nav>
+    </div>
+    </header>
+    <main>
+        <section>
+            <h2>Global Burnout Statistics</h2>
+            <p>Here you can find global statistics on employee burnout, including average mental fatigue scores, company seniority, job level, work-from-home status, and overall burnout rate.</p>
+        </section>
+        <section>
+            <h2>Visualizations</h2>
+            <div class="visualization-container">
+                <h3>Burnout Rate</h3>
+                <div id="burnout_rate">{{ burnout_rate|safe }}</div>
+            </div>
+            <div class="visualization-container">
+                <h3>Workload Correlation</h3>
+                <div id="workload_correlation">{{ workload_correlation|safe }}</div>
+            </div>
+            <div class="visualization-container">
+                <h3>Burnout Distribution by Gender</h3>
+                <div id="burnout_by_gender">{{ burnout_by_gender|safe }}</div>
+            </div>
+            <div class="visualization-container">
+                <h3>Burnout Distribution by Age</h3>
+                <div id="burnout_by_age">{{ burnout_by_age|safe }}</div>
+            </div>
+            <div class="visualization-container">
+                <h3>Burnout Trends by Seniority</h3>
+                <div id="burnout_trends_by_seniority">{{ burnout_trends_by_seniority|safe }}</div>
+            </div>
+            <div class="visualization-container">
+                <h3>Heatmap of Correlations</h3>
+                <div id="heatmap">{{ heatmap|safe }}</div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Burnout Monitor. All rights reserved.</p>
+    </footer>
+</body>
+</html>
