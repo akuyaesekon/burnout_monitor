@@ -17,26 +17,23 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li>
-                <li><a href="{{ url_for('additional_visualizations') }}">Additional Visualizations</a></li>
+                <li><a href="{{ url_for('additional_visualizations') }}">Further Visualizations</a></li>
             </ul>
         </nav>
         </div>
     </header>
     <main>
-        <section class="influential-factors">
-            <h2>Influential Factors in Burnout Prediction</h2>
-            <ul>
-                {% for feature, importance in feature_importances.items() %}
-                    <li><span>{{ feature }}</span> <span>{{ importance }}</span></li>
-                {% endfor %}
-            </ul>
-        </section>
         <section>
             <h2>Personalized Recommendations</h2>
             <ul>
                 {% for recommendation in recommendations %}
                     <li>{{ recommendation }}</li>
                 {% endfor %}
+                <!-- Add your additional recommendations here -->
+                <li>Take regular breaks throughout the workday to refresh your mind and reduce stress.</li>
+                <li>Ensure you maintain a work-life balance by setting boundaries with work hours.</li>
+                <li>Engage in activities like exercise, meditation, or hobbies to manage stress effectively.</li>
+                <li>Communicate openly with your manager or team about workload concerns and stressors.</li>
             </ul>
         </section>
         <section>
