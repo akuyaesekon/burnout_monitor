@@ -12,29 +12,40 @@
             <div class="logo-container">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Burnout Monitor Logo" class="logo">
             </div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li>
-                <li><a href="{{ url_for('additional_visualizations') }}">Further Visualizations</a></li>
-            </ul>
-        </nav>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li>
+                    <li><a href="{{ url_for('additional_visualizations') }}">Further Visualizations</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
     <main>
-        <div class="visualization-container">
-            <h3>Burnout by Work Mode</h3>
-            <div id="burnout_by_work_mode">{{ burnout_by_work_mode|safe }}</div>
-        </div>
-        <div class="visualization-container">
-            <h3>Burnout Trends by Seniority</h3>
-            <div id="burnout_trends_by_seniority">{{ burnout_trends_by_seniority|safe }}</div>
-        </div>
-        <div class="visualization-container">
-            <h3>Heatmap of Correlations</h3>
-            <div id="heatmap">{{ heatmap|safe }}</div>
-        </div>
+        <section>
+            <h3>Explore additional insights into employee burnout, including department comparisons, remote work impact, and more.</h3>
+        </section>
+
+        <section>
+            <div class="visualization-container">
+                <h3>Burnout by Department</h3>
+                <div id="burnout_by_department">{{ burnout_by_department|safe }}</div>
+            </div>
+            <div class="visualization-container">
+                <h3>Burnout by Job Level</h3>
+                <div id="burnout_by_job_level">{{ burnout_by_job_level|safe }}</div>
+            </div>
+            <div class="visualization-container">
+                <h3>Work Hours vs Burnout</h3>
+                <div id="work_hours_burnout">{{ work_hours_burnout|safe }}</div>
+            </div>
+            <!-- Replace Line Graph with Pie Chart -->
+            <div class="visualization-container">
+                <h3>Burnout Distribution by Work Life Balance</h3>
+                <div id="burnout_pie_chart">{{ burnout_pie_chart|safe }}</div>
+            </div>
+        </section>
     </main>
     <footer>
         <p>&copy; 2025 Burnout Monitor. All rights reserved.</p>

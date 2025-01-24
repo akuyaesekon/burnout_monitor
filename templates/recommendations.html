@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recommendations</title>
+    <title>Employee Recommendations for Burnout Prevention</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -12,38 +12,47 @@
             <div class="logo-container">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Burnout Monitor Logo" class="logo">
             </div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li>
-                <li><a href="{{ url_for('additional_visualizations') }}">Further Visualizations</a></li>
-            </ul>
-        </nav>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li>
+                    <li><a href="{{ url_for('additional_visualizations') }}">Further Visualizations</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
+    
     <main>
         <section>
-            <h2>Personalized Recommendations</h2>
+            <h3>Personalized Recommendations for Reducing Burnout</h3>
+            <ul>
+                {% for recommendation in personalized_recommendations %}
+                    <li>{{ recommendation }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Recommended Actions</h3>
             <ul>
                 {% for recommendation in recommendations %}
                     <li>{{ recommendation }}</li>
                 {% endfor %}
-                <!-- Add your additional recommendations here -->
-                <li>Take regular breaks throughout the workday to refresh your mind and reduce stress.</li>
-                <li>Ensure you maintain a work-life balance by setting boundaries with work hours.</li>
-                <li>Engage in activities like exercise, meditation, or hobbies to manage stress effectively.</li>
-                <li>Communicate openly with your manager or team about workload concerns and stressors.</li>
             </ul>
-        </section>
-        <section>
-            <h2>Visualizations of Burnout Risk Factors</h2>
-            <div class="visualization-container">
-                <h3>Burnout Risk Factors</h3>
-                <div id="burnout_risk_factors">{{ burnout_risk_factors|safe }}</div>
+            <div>
+                <h3>Top 5 Burnout Risk Factors</h3>
+                <div id="burnout_risk_factors">
+                    {{ burnout_risk_factors|safe }}
+                </div>
+            </div>
+
+            <div>
+                <h3>Burnout Trends by Seniority (Line Graph)</h3>
+                <div id="line_graph">
+                    {{ line_graph|safe }}
+                </div>
             </div>
         </section>
     </main>
+    
     <footer>
         <p>&copy; 2025 Burnout Monitor. All rights reserved.</p>
     </footer>

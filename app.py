@@ -109,22 +109,104 @@ def dashboard():
     
     return render_template('dashboard.html', burnout_rate=burnout_rate, workload_correlation=workload_correlation, burnout_by_gender=burnout_by_gender, burnout_by_age=burnout_by_age, burnout_trends_by_seniority=burnout_trends_by_seniority, heatmap=heatmap)
 
+# Function to generate personalized recommendations
+def generate_personalized_recommendations(employee):
+    recommendations = []
+
+    # Example of personalized recommendations based on employee data
+    if employee['Age'] < 30:
+        recommendations.append("As a young employee, consider finding a mentor to guide your career progression.")
+    if employee['Time_of_service'] < 2:
+        recommendations.append("As someone with less than 2 years of service, you might benefit from more work-life balance to prevent early burnout.")
+    if employee['Post_Level'] > 3:  # assuming higher post level means more responsibility
+        recommendations.append("With a higher job level, ensure you're managing your workload effectively and taking breaks when needed.")
+
+    return recommendations
+
 @app.route('/recommendations')
 def recommendations():
+    # Generate recommendations based on feature importance
     recommendations = generate_recommendations()
-    burnout_risk_factors = pio.to_html(px.bar(feature_importances.head(5), title='Top 5 Burnout Risk Factors', labels={'index': 'Factors', 'value': 'Importance'}, color_discrete_sequence=['#EF553B']), full_html=False)
-    return render_template('recommendations.html', feature_importances=feature_importances, recommendations=recommendations, burnout_risk_factors=burnout_risk_factors)
 
-@app.route('/additional-visualizations')
+    # Generate personalized recommendations based on an example employee's data (could be dynamic or selected)
+    example_employee = df.iloc[0]  # Just using the first employee for demonstration
+    personalized_recommendations = generate_personalized_recommendations(example_employee)
+
+    # Create a bar chart for the top 5 burnout risk factors (importance)
+    burnout_risk_factors = pio.to_html(
+        px.bar(feature_importances.head(5), 
+               title='Top 5 Burnout Risk Factors', 
+               labels={'index': 'Factors', 'value': 'Importance'},
+               color_discrete_sequence=['#EF553B']), 
+        full_html=False
+    )
+
+    # Create a line graph showing burnout trends by seniority (Time_of_service)
+    line_graph = pio.to_html(
+        px.line(df, x='Time_of_service', y='Work_Life_balance', color='Work_Life_balance', 
+                title='Burnout Trends by Seniority', 
+                labels={'Time_of_service': 'Time of Service', 'Work_Life_balance': 'Work Life Balance'},
+                color_discrete_sequence=px.colors.qualitative.Bold),
+        full_html=False
+    )
+
+    # Convert feature importances to a table
+    feature_importances_table = feature_importances.reset_index().rename(columns={'index': 'Feature', 0: 'Importance'})
+    table_html = feature_importances_table.to_html(classes='table table-striped', index=False)
+
+    # Return the recommendations template with all the necessary visualizations
+    return render_template(
+        'recommendations.html', 
+        feature_importances=feature_importances,
+        recommendations=recommendations, 
+        burnout_risk_factors=burnout_risk_factors,
+        line_graph=line_graph,
+        table_html=table_html,
+        personalized_recommendations=personalized_recommendations  # Passing personalized recommendations to the template
+    )
+
+@app.route('/additional_visualizations')
 def additional_visualizations():
-    burnout_by_work_mode = pio.to_html(px.histogram(df, x='salary', color='Work_Life_balance', title='Burnout by Work Mode', labels={'salary': 'Salary', 'Work_Life_balance': 'Work Life Balance'}, color_discrete_sequence=px.colors.qualitative.Safe), full_html=False)
-    burnout_trends_by_seniority = pio.to_html(px.line(df, x='Time_of_service', y='Work_Life_balance', color='Work_Life_balance', title='Burnout Trends by Seniority', labels={'Time_of_service': 'Time of Service', 'Work_Life_balance': 'Work Life Balance'}, color_discrete_sequence=px.colors.qualitative.Bold), full_html=False)
-    
-    # Filter numeric columns for correlation calculation
-    numeric_df = df.select_dtypes(include=['float64', 'int64'])
-    heatmap = pio.to_html(px.imshow(numeric_df.corr(), text_auto=True, title='Heatmap of Correlations', color_continuous_scale=px.colors.sequential.Plasma), full_html=False)
-    
-    return render_template('additional_visualizations.html', burnout_by_work_mode=burnout_by_work_mode, burnout_trends_by_seniority=burnout_trends_by_seniority, heatmap=heatmap)
+    # Burnout by Department (Bar chart)
+    burnout_by_department = pio.to_html(
+        px.bar(df, x='Unit', y='Work_Life_balance', title='Burnout by Department', 
+               labels={'Unit': 'Department', 'Work_Life_balance': 'Work Life Balance'},
+               color='Work_Life_balance', color_continuous_scale='rainbow'),
+        full_html=False
+    )
+
+    # Burnout by Job Level (Box plot)
+    burnout_by_job_level = pio.to_html(
+        px.box(df, x='Post_Level', y='Work_Life_balance', title='Burnout by Job Level',
+               labels={'Post_Level': 'Job Level', 'Work_Life_balance': 'Work Life Balance'},
+               color='Work_Life_balance'),  # Corrected color argument
+        full_html=False
+    )
+
+    # Correlation between Work Hours and Burnout (Scatter plot)
+    work_hours_burnout = pio.to_html(
+        px.scatter(df, x='Time_of_service', y='Work_Life_balance', title='Work Hours vs Burnout',
+                   labels={'Time_of_service': 'Time of Service', 'Work_Life_balance': 'Work Life Balance'},
+                   color='Work_Life_balance', color_continuous_scale='YlOrRd'),
+        full_html=False
+    )
+
+    # Generate Pie chart for Burnout Distribution by Work Life Balance
+    burnout_pie_chart = pio.to_html(
+        px.pie(df, names='Work_Life_balance', title='Burnout Distribution by Work Life Balance',
+               labels={'Work_Life_balance': 'Work Life Balance'}, 
+               color='Work_Life_balance', 
+               color_discrete_sequence=px.colors.sequential.Plasma),
+        full_html=False
+    )
+
+    return render_template(
+        'additional_visualizations.html', 
+        burnout_by_department=burnout_by_department,
+        burnout_by_job_level=burnout_by_job_level,
+        work_hours_burnout=work_hours_burnout,
+        burnout_pie_chart=burnout_pie_chart  # Pass the pie chart for burnout distribution
+    )
 
 @app.route('/api/data')
 def get_data():
